@@ -1,0 +1,63 @@
+2D sidscrolling based Unity Tutorial steps
+
+Section 1 - Setup
+- Download Unity Hub
+- Pull Down Repo
+- Add Unity Project to the Unity hub and install the proper unity version
+- Open the project
+
+
+
+
+Section 2 - Scene Creation
+- Create a new Scene
+- Create a "floor" object (2D sprite)
+- Create a "ledge" object (2D sprite) for player to jump onto in later sections)
+- Create a "player" object (2D sprite)
+- Add transform components to objects if not already attached to the objects
+- Add a collider to both the player and the floor objects
+
+
+
+
+Section 3 - Basic Movement
+- Add RigidBody to the player object (may need to add to floor object also, I don't remember)
+- Move player object left and right using the a and d keys
+	- Directly use Transform component to move
+	- Then remove/comment out transform movement code and use the rigid body component for movement.
+- Add ability to "Jump" to player object
+	- don't allow player to jump continuously without touching the ground
+	- OPTIONAL: add ability to double jump
+- Add ability for player to sprint when holding shift key
+	- extra: Add stamina that depletes when sprinting and comes back slowly over time when not sprinting
+
+Notes:
+- Raycasts may be usefull for checking if you are touching the ground
+
+
+
+
+
+Section 4 - Instatiation
+
+
+
+
+Section 5 - GUI
+- Add Stamia bar
+- Add Health bar
+- Add 
+
+
+
+Section 6 Collision Handling
+
+
+
+
+Section 7 - Health
+
+
+
+
+Section 8 - Attacks
