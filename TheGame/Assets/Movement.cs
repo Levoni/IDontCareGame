@@ -5,16 +5,21 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public float speed = 50.0f;
+    public float xSpeed = 150.0f;
+    public float xBaseSpeed = 150.0f;
+    public float sprintIncrement;
+    public float ySpeed = 200.0f;
     public Rigidbody2D rigidbody2D;
     public Vector2 movement;
-    public Vector2 temp;
+    public float jumpForce = 1000;
+    public bool sprinting = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+        sprintIncrement = xSpeed / 2;
     }
 
     // Update is called once per frame
@@ -34,18 +39,43 @@ public class Movement : MonoBehaviour
         //    tempTransform.position = tempPosition;
         //}
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
-        {
-            movement = new Vector2(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0);
-            movement.y = rigidbody2D.velocity.y + (Input.GetAxis("Vertical") * speed * Time.deltaTime); // fix; constant increase of speed upwards
-        }
-        else
-        {
-            movement = new Vector2(0, rigidbody2D.velocity.y);
-        }
-        rigidbody2D.velocity = movement;
+        // stops movement up when button is released; changed movement pattern
+        //if (Input.GetKeyUp(KeyCode.W))
+        //{
+        //    y = true;
+        //    movement.y = 0;
+        //}
+        
+        // constant movement up using Rigidbody 
+        //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
+        //{
+        //    y = false;
+        //    movement.y = Input.GetAxis("Vertical") * ySpeed * Time.deltaTime;
+        //}
 
-        // stop horizontal movement and go up until let go then down
+        movement = new Vector2(0, rigidbody2D.velocity.y);
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            xSpeed += sprintIncrement;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            xSpeed = xBaseSpeed;
+        }
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+           movement.x = Input.GetAxis("Horizontal") * xSpeed * Time.deltaTime;
+        }
+
+        rigidbody2D.velocity = movement;    // ORDER MATTERS!!
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+
 
         // double jump
         // raycast downward
